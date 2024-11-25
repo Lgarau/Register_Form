@@ -23,7 +23,33 @@ function validateForm() {
     }
 
     // Se tutto è valido
-    errorMessage.textContent = "";
-    alert("Registrazione completata con successo!");
-    return true;
+    const successMessage = document.createElement('p');
+    successMessage.textContent = "Registrazione completata con successo!";
+    successMessage.style.color = "green";
+    document.querySelector('.form-container').appendChild(successMessage);
+    }
+
+//verifica mail per domini
+
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+if (!emailPattern.test(email)) {
+    errorMessage.textContent = "Inserisci un'email valida.";
+    return false;
 }
+
+//Verifica lunghezza minima pwd
+
+if (password.length < 8) {
+    errorMessage.textContent = "La password deve essere di almeno 8 caratteri.";
+    return false;
+}
+if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) {
+    errorMessage.textContent = "La password deve contenere lettere maiuscole, minuscole e numeri.";
+    return false;
+}
+
+//Listener bottone reset
+
+document.querySelector('input[type="reset"]').addEventListener('click', () => {
+    errorMessage.textContent = "";
+});
